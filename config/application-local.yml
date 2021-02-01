@@ -1,0 +1,42 @@
+spring:
+  datasource:
+    url: ${jdbc.url}
+    username: ${jdbc.username}
+    password: ${jdbc.password}
+  data:
+    mongodb:
+      uri: ${mongodb.uri}
+      authentication-database: aim
+      database: aimDB
+#  data:
+#    mongodb:
+#      uri: ${mongodb.uri}
+
+logging:
+  level:
+    root: info
+    com.gridsum.tac.auth.mapper: debug
+    org.springframework.data.mongodb: debug
+    org.springframework.data.mongodb.core.index: OFF
+  file: logs/${spring.application.name}.log
+
+ribbon:
+  eureka:
+    enabled: true
+
+eureka:
+  instance:
+    lease-expiration-duration-in-seconds: 15
+    lease-renewal-interval-in-seconds: 5
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}
+  client:
+    fetchRegistry: true
+    registryFetchIntervalSeconds: 10
+    serviceUrl:
+      defaultZone: ${eureka.defaultZone}
+
+#server:
+#  error:
+#    include-stacktrace: always
+#    include-exception: true
