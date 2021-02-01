@@ -1,0 +1,47 @@
+spring:
+  application:
+    name: auth
+  profiles:
+    active: local
+  #出现错误时, 直接抛出异常
+  mvc:
+    throw-exception-if-no-handler-found: true
+  #不要为工程中的资源文件建立映射
+  resources:
+    add-mappings: false
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    default-property-inclusion: non_null
+    serialization:
+      FAIL_ON_EMPTY_BEANS: false
+      WRITE_DATES_AS_TIMESTAMPS: false
+  datasource:
+    name: auth
+    driver-class-name: com.mysql.jdbc.Driver
+    # 使用druid数据源
+    type: com.alibaba.druid.pool.DruidDataSource
+    filters: stat
+    maxActive: 50
+    initialSize: 10
+    maxWait: 60000
+    minIdle: 10
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 20
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  type-handlers-package: com.gridsum.tac.auth.handler
+
+feign:
+  hystrix:
+    enabled: true
+
+server:
+  port: 7008
